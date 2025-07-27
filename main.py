@@ -17,5 +17,9 @@ async def on_ready():
 async def bitch(ctx):
     await ctx.send("Shut up you peasant")
     
+@client.command()
+async def who_is_the_worst_player(ctx):
+    await ctx.send("I think the Newton is among the bottom of the barrel in this group.")
+    
 webserver.keep_alive()
 client.run(DISCORD_TOKEN)
