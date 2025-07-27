@@ -13,9 +13,9 @@ client = commands.Bot(command_prefix = '!', intents=intents)
 async def on_ready():
     print("Vball bot is online")
     
-@client.command
-async def hello(ctx):
-    await ctx.send("Hello")
+@client.command()
+async def bitch(ctx):
+    await ctx.send("Shut up you peasant")
     
 webserver.keep_alive()
 client.run(DISCORD_TOKEN)
