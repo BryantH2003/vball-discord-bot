@@ -29,12 +29,23 @@ async def who_is_the_worst_player(ctx):
 @client.command()
 async def showdata(ctx):
     data = get_sheet_data()
-    msg = "```json\n"
-    msg += "**Sheet Data:**\n"
+    
+    embedVar = discord.Embed(title="Open Gym Session", description="Info on the upcoming open gym session.", color=discord.Color.green)
+    
+    approved = ""
     for row in data:
-        msg += f"{row['Name'], row['Verified']}\n"
-    msg += "```"
-    await ctx.send(msg)
+        if row['Verified'] == "Approved":
+            approved += row['Name']
+            approved += '\n'
+            
+    embedVar.add_field(name="Approved", value=approved, inline=False)
+    
+    await ctx.channel.send(embed=embedVar)
+    
+    # msg = "**Sheet Data:**\n"
+    # for row in data:
+    #     msg += f"{row['Name'], row['Verified']}\n"
+    # await ctx.send(msg)
     
 # Time Based Events    
 @tasks.loop(seconds=60)  # every 60 seconds
