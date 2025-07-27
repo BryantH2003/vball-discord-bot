@@ -31,7 +31,7 @@ async def showdata(ctx):
     data = get_sheet_data()
     msg = "**Sheet Data:**\n"
     for row in data:
-        msg += f"{row}\n"
+        msg += f"{row['Name'], row['Verified']}\n"
     await ctx.send(msg)
     
 # Time Based Events    
@@ -39,7 +39,7 @@ async def showdata(ctx):
 async def check_sheet():
     channel = client.get_channel(1399067333766680720)
     data = get_sheet_data()
-    await channel.send(f"Latest data:\n{data[0]}")
+    await channel.send(f"Latest data:\n{data}")
     
 webserver.keep_alive()
 client.run(DISCORD_TOKEN)
