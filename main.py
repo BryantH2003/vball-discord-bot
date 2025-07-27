@@ -37,7 +37,7 @@ async def showdata(ctx):
 # Time Based Events    
 @tasks.loop(seconds=60)  # every 60 seconds
 async def check_sheet():
-    channel = bot.get_channel(1399067333766680720)
+    channel = client.get_channel(1399067333766680720)
     data = get_sheet_data()
     await channel.send(f"Latest data:\n{data[0]}")
     
