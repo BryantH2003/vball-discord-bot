@@ -30,7 +30,7 @@ async def who_is_the_worst_player(ctx):
 async def showdata(ctx):
     data = get_sheet_data()
     
-    embedVar = discord.Embed(title="Open Gym Session", description="Info on the upcoming open gym session.", color=discord.Color.green)
+    embedVar = discord.Embed(title="Open Gym Session", description="Info on the upcoming open gym session.", color=discord.Color.green())
     
     approved = ""
     for row in data:
