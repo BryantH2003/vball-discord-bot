@@ -15,7 +15,7 @@ client = commands.Bot(command_prefix = '!', intents=intents)
 @client.event
 async def on_ready():
     print("Vball bot is online")
-    check_sheet.start()
+    # check_sheet.start()
 
 # Custom Bot Commands 
 @client.command()
