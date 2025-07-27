@@ -29,9 +29,11 @@ async def who_is_the_worst_player(ctx):
 @client.command()
 async def showdata(ctx):
     data = get_sheet_data()
-    msg = "**Sheet Data:**\n"
+    msg = "```json\n"
+    msg += "**Sheet Data:**\n"
     for row in data:
         msg += f"{row['Name'], row['Verified']}\n"
+    msg += "```"
     await ctx.send(msg)
     
 # Time Based Events    
