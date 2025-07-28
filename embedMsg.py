@@ -25,7 +25,7 @@ def build_embed_from_data(data, time, location):
     embedVar.add_field(name="Pending :yellow_square:", value=pending or "-", inline=True)
     embedVar.add_field(name="Backed Out :red_square:", value=backedOut or "-", inline=True)
 
-    headcount = f"{approvedPlayers}/12"
+    headcount = f"Headcount: {approvedPlayers}/12"
     embedVar.add_field(name=headcount, value="", inline=False)
     
     return embedVar
