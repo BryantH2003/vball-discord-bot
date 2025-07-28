@@ -1,11 +1,11 @@
 import discord
 
-def build_embed_from_data(data, time, location):
+def build_embed_from_data(data, time, location, signupLink):
     embedVar = discord.Embed(title="Open Gym Session", description="", color=discord.Color.green())
 
     embedVar.add_field(name="Time", value=time, inline=True)
     embedVar.add_field(name="Location", value=location, inline=True)
-    embedVar.add_field(name="", value="", inline=False)
+    embedVar.add_field(name="Sign Up", value=signupLink, inline=False)
 
     approved = ""
     pending = ""
