@@ -5,7 +5,7 @@ def build_embed_from_data(data):
 
     embedVar.add_field(name="Time", value="TIME", inline=True)
     embedVar.add_field(name="Location", value="LOCATION", inline=True)
-    embedVar.add_field(name="\u200b", value="\u200b", inline=False)  # Spacer
+    embedVar.add_field(name="", value="", inline=False)
 
     approved = ""
     pending = ""
