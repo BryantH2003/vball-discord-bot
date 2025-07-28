@@ -32,14 +32,32 @@ async def showdata(ctx):
     
     embedVar = discord.Embed(title="Open Gym Session", description="Info on the upcoming open gym session.", color=discord.Color.green())
     
+    embedVar.add_field(name="Time", value="TIME", inline=True)
+    embedVar.add_field(name="Location", value="LOCATION", inline=True)
+    
+    embedVar.add_field(name="", value="", inline=False)
+    
     approved = ""
+    pending = ""
+    denied = ""
+    
     for row in data:
         if row['Verified'] == "Approved":
             approved += row['Name']
             approved += '\n'
+        
+        if row['Verified'] == "Pending":
+            pending += row['Name']
+            pending += '\n'
+        
+        if row['Verified'] == "Denied":
+            denied += row['Name']
+            denied += '\n'
             
-    embedVar.add_field(name="Approved", value=approved, inline=False)
-    
+    embedVar.add_field(name="Approved <:green_square:>", value=approved, inline=True)
+    embedVar.add_field(name="Pending <:yellow_square:>", value=pending, inline=True)
+    embedVar.add_field(name="Denied <:red_square:>", value=denied, inline=True)
+
     await ctx.channel.send(embed=embedVar)
     
     # msg = "**Sheet Data:**\n"
