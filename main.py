@@ -49,7 +49,7 @@ async def who_is_the_worst_player(ctx):
     await ctx.send("I think the Newton is among the bottom of the barrel in this group.")
     
 @client.command()
-async def showdata(ctx):
+async def opengym(ctx, time, location):
     global message_cache
 
     # Close previous message if it exists
@@ -63,7 +63,7 @@ async def showdata(ctx):
 
     # Create new message
     data = get_sheet_data()
-    embed = build_embed_from_data(data)
+    embed = build_embed_from_data(data, time, location)
     msg = await ctx.send(embed=embed)
     await msg.add_reaction("🔁")
 
