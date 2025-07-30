@@ -5,6 +5,7 @@ import webserver
 from oauth2client.service_account import ServiceAccountCredentials
 from spreadSheetData import get_sheet_data
 from embedMsg import build_embed_from_data
+from cacheFile import load_message_cache, save_message_cache
 
 DISCORD_TOKEN = os.environ['discordkey']
 
@@ -14,7 +15,7 @@ intents.reactions = True
 intents.messages = True
 client = commands.Bot(command_prefix = '!', intents=intents)
 
-message_cache = None
+message_cache = load_message_cache()
 
 # Main On Start Method
 @client.event
@@ -52,27 +53,29 @@ async def who_is_the_worst_player(ctx):
 async def opengym(ctx, time, location, signupLink):
     global message_cache
 
-    # Close previous message if it exists
+    # Close the old message if it exists
     if message_cache:
         try:
             channel = client.get_channel(message_cache["channel_id"])
             old_message = await channel.fetch_message(message_cache["message_id"])
             await old_message.edit(content="**This session is now CLOSED.**", embed=None)
         except Exception as e:
-            print(f"Error closing previous message: {e}")
+            print(f"Error closing old message: {e}")
 
-    # Create new message
+    # Post the new session
     data = get_sheet_data()
-    embed = build_embed_from_data(data, time, location, signupLink)
+    embed = build_embed_from_data(data)
     msg = await ctx.send(embed=embed)
     await msg.add_reaction("🔁")
 
-    # Track this message
+    # Update the in-memory and saved cache
     message_cache = {
         "message_id": msg.id,
         "channel_id": ctx.channel.id,
         "user_id": ctx.author.id
     }
+    
+    save_message_cache(message_cache)
 
     
 webserver.keep_alive()
