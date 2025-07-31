@@ -31,14 +31,44 @@ async def on_reaction_add(reaction, user):
         return
 
     if str(reaction.emoji) == "🔁" and message_cache:
-        if reaction.message.id == message_cache["message_id"]:
-            try:
-                new_data = get_sheet_data()
-                new_embed = build_embed_from_data(new_data)
-                await reaction.message.edit(embed=new_embed)
-                await reaction.remove(user)
-            except Exception as e:
-                print(f"Error refreshing message: {e}")
+        try:
+            channel = client.get_channel(message_cache["channel_id"])
+            message = await channel.fetch_message(message_cache["message_id"])
+            
+            if reaction.message.id != message.id:
+                return
+
+            new_data = get_sheet_data()
+            new_embed = build_embed_from_data(new_data)
+            await message.edit(embed=new_embed)
+            await reaction.remove(user)
+            
+        except Exception as e:
+            print(f"Error refreshing message: {e}")
+
+
+@client.event
+async def on_raw_reaction_add(payload):
+    global message_cache
+
+    if payload.user_id == client.user.id:
+        return
+
+    if str(payload.emoji.name) == "🔁" and message_cache:
+        try:
+            if payload.message_id != message_cache["message_id"]:
+                return
+
+            channel = client.get_channel(payload.channel_id)
+            message = await channel.fetch_message(payload.message_id)
+            user = await client.fetch_user(payload.user_id)
+
+            new_data = get_sheet_data()
+            new_embed = build_embed_from_data(new_data)
+            await message.edit(embed=new_embed)
+            await message.remove_reaction("🔁", user)
+        except Exception as e:
+            print(f"Error in raw reaction refresh: {e}")
 
 # Custom Bot Commands 
 @client.command()
