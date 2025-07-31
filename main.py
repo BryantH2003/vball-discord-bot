@@ -64,7 +64,7 @@ async def opengym(ctx, time, location, signupLink):
 
     # Post the new session
     data = get_sheet_data()
-    embed = build_embed_from_data(data)
+    embed = build_embed_from_data(data, time, location, signupLink)
     msg = await ctx.send(embed=embed)
     await msg.add_reaction("🔁")
 
